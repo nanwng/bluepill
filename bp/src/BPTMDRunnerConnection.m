@@ -184,6 +184,7 @@
             // This is called when the task is abruptly terminated (e.g. if the test times out)
             [self stopVideoRecording:YES];
             [BPUtils printInfo:INFO withString:@"DTXConnection disconnected."];
+            self.disconnected = YES;
         }];
         
         [connection
