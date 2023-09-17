@@ -17,11 +17,13 @@
 @end
 
 @interface BPTMDRunnerConnection : NSObject
+@property (nonatomic, assign) BOOL disconnected;
 @property (nonatomic, strong) BPExecutionContext *context;
 @property (nonatomic, strong) BPSimulator *simulator;
 @property (nonatomic, copy) void (^completionBlock)(NSError *, pid_t);
 - (instancetype)initWithContext:(BPExecutionContext *)context andInterface:(id<BPTestBundleConnectionDelegate>)interface;
 - (void)connectWithTimeout:(NSTimeInterval)timeout;
+- (void)connectAndRun;
 - (void)startTestPlan;
 @end
 
