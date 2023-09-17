@@ -184,6 +184,7 @@
             // This is called when the task is abruptly terminated (e.g. if the test times out)
             [self stopVideoRecording:YES];
             [BPUtils printInfo:INFO withString:@"DTXConnection disconnected."];
+            NSLog(@"DTXConnection disconnected");
             self.disconnected = YES;
         }];
         
@@ -308,6 +309,7 @@ static inline NSString* getVideoPath(NSString *directory, NSString *testClass, N
 // This looks like tested application logs
 - (id)_XCT_logDebugMessage:(NSString *)debugMessage {
     [BPUtils printInfo:DEBUGINFO withString:@"BPTestBundleConnection debug message: %@", debugMessage];
+    NSLog(@"BPTestBundleConnection debug message: %@", debugMessage);
     return nil;
 }
 
@@ -363,11 +365,13 @@ static inline NSString* getVideoPath(NSString *directory, NSString *testClass, N
 
 - (id)_XCT_didFinishExecutingTestPlan {
     [BPUtils printInfo:INFO withString:@"_XCT_didFinishExecutingTestPlan"];
+    NSLog(@"_XCT_didFinishExecutingTestPlan");
     return nil;
 }
 
 - (id)_XCT_didBeginExecutingTestPlan {
     [BPUtils printInfo:INFO withString:@"_XCT_didBeginExecutingTestPlan"];
+    NSLog(@"_XCT_didBeginExecutingTestPlan");
     return nil;
 }
 
