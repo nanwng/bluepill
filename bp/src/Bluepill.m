@@ -40,6 +40,8 @@ static void onInterrupt(int ignore) {
     interrupted = 1;
 }
 
+static int checkDisconnectDelay = 0;
+
 @interface Bluepill()<BPTestBundleConnectionDelegate>
 
 @property (nonatomic, strong) BPConfiguration *config;
@@ -446,6 +448,8 @@ static void onInterrupt(int ignore) {
     [runnerConnection connectWithTimeout:180];
     
     [runnerConnection startTestPlan];
+
+    checkDisconnectDelay = 30;
     NEXT([self checkProcessWithContext:context conenction:runnerConnection]);
 
 }
@@ -482,21 +486,13 @@ static void onInterrupt(int ignore) {
 
     if (connection.disconnected) {
         // wait for 30 seconds to see if it can be finished
-        int attempts = 300;
-        while (attempts > 0) {
-            [NSThread sleepForTimeInterval:0.1];
-            --attempts;
-            if (!isRunning && [context.runner isFinished]) {
-                [BPUtils printInfo:INFO withString:@"Finished"];
-                [[BPStats sharedStats] endTimer:LAUNCH_APPLICATION(context.attemptNumber) withResult:[BPExitStatusHelper stringFromExitStatus:context.exitStatus]];
-                [self runnerCompletedWithContext:context];
-                return;
-            }
+        if (checkDisconnectDelay > 0) {
+            checkDisconnectDelay --;
+        } else {
+            [BPUtils printInfo:INFO withString:@"Connection disconnected, deleteing simulator"];
+            [self deleteSimulatorWithContext:context andStatus:BPExitStatusLaunchAppFailed];
+            return;
         }
-
-        [BPUtils printInfo:INFO withString:@"Connection disconnected, deleteing simulator"];
-        [self deleteSimulatorWithContext:context andStatus:BPExitStatusLaunchAppFailed];
-        return;
     }
     NEXT_AFTER(1, [self checkProcessWithContext:context conenction:connection]);
 }
