@@ -449,7 +449,7 @@ static int checkDisconnectDelay = 0;
     
     [runnerConnection startTestPlan];
 
-    checkDisconnectDelay = 30;
+    checkDisconnectDelay = 1000;
     NEXT([self checkProcessWithContext:context conenction:runnerConnection]);
 
 }
