@@ -449,7 +449,7 @@ static int checkDisconnectDelay = 0;
     
     [runnerConnection startTestPlan];
 
-    checkDisconnectDelay = 1000;
+    checkDisconnectDelay = 1200;
     NEXT([self checkProcessWithContext:context conenction:runnerConnection]);
 
 }
@@ -484,16 +484,16 @@ static int checkDisconnectDelay = 0;
         return;
     }
 
-    if (connection.disconnected) {
-        // wait for 30 seconds to see if it can be finished
-        if (checkDisconnectDelay > 0) {
-            checkDisconnectDelay --;
-        } else {
-            [BPUtils printInfo:INFO withString:@"Connection disconnected, deleteing simulator"];
-            [self deleteSimulatorWithContext:context andStatus:BPExitStatusLaunchAppFailed];
-            return;
-        }
-    }
+//    if (connection.disconnected) {
+//        // wait for 30 seconds to see if it can be finished
+//        if (checkDisconnectDelay > 0) {
+//            checkDisconnectDelay --;
+//        } else {
+//            [BPUtils printInfo:INFO withString:@"Connection disconnected, deleteing simulator"];
+//            [self deleteSimulatorWithContext:context andStatus:BPExitStatusLaunchAppFailed];
+//            return;
+//        }
+//    }
     NEXT_AFTER(1, [self checkProcessWithContext:context conenction:connection]);
 }
 
