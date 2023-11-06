@@ -484,16 +484,16 @@ static int checkDisconnectDelay = 0;
         return;
     }
 
-//    if (connection.disconnected) {
-//        // wait for 30 seconds to see if it can be finished
-//        if (checkDisconnectDelay > 0) {
-//            checkDisconnectDelay --;
-//        } else {
-//            [BPUtils printInfo:INFO withString:@"Connection disconnected, deleteing simulator"];
-//            [self deleteSimulatorWithContext:context andStatus:BPExitStatusLaunchAppFailed];
-//            return;
-//        }
-//    }
+    if (connection.disconnected) {
+        // wait for xx seconds to see if it can be finished
+        if (checkDisconnectDelay > 0) {
+            checkDisconnectDelay --;
+        } else {
+            [BPUtils printInfo:INFO withString:@"Connection disconnected, deleteing simulator"];
+            [self deleteSimulatorWithContext:context andStatus:BPExitStatusLaunchAppFailed];
+            return;
+        }
+    }
     NEXT_AFTER(1, [self checkProcessWithContext:context conenction:connection]);
 }
 
